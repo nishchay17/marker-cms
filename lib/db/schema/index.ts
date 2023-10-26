@@ -1,4 +1,4 @@
 import { accounts, sessions, users, verificationTokens } from "./user";
-import { analytics } from "./analytics";
+import { repo } from "./repo";
 
-export { accounts, sessions, users, verificationTokens, analytics };
+export { accounts, sessions, users, verificationTokens, repo };
