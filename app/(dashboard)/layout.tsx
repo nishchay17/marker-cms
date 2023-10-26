@@ -1,11 +1,10 @@
-"use client";
-
 import { DashboardNav } from "@/components/nav/dashboard-nav";
 import { AdminDashboardNav } from "@/config/dashboard-nav";
-
 import { Icons } from "@/components/icons";
 import { siteConfig } from "@/config/site";
 import SettingsMenu from "@/components/settings-menu";
+import RepoSelector from "@/components/nav/RepoSelector";
+import Profile from "@/components/nav/Profile";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -17,11 +16,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       <div className="border-b-[1px] mb-6">
         <nav className="mx-auto max-w-[1700px] p-4">
           <div className="flex justify-between items-center">
-            <div className="flex gap-3 items-center select-none">
-              <Icons.hero size={24} />
-              <h1 className="font-semibold text-lg">{siteConfig.name}</h1>
+            <div className="flex gap-2 items-center select-none">
+              <Icons.hero size={18} />
+              <h1 className="font-semibold">{siteConfig.name}</h1>
             </div>
             <div className="flex gap-4 items-center">
+              <Profile />
+              <RepoSelector />
               <SettingsMenu />
             </div>
           </div>
