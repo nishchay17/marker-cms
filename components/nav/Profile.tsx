@@ -15,7 +15,7 @@ function Profile() {
         </>
       ) : (
         <>
-          <p>Hi {session?.data?.user.name}</p>
+          <p>Hi {session?.data?.user.name?.split(" ")[0]}</p>
           <Image
             className="rounded-lg"
             src={session?.data?.user.image ?? ""}
