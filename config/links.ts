@@ -21,4 +21,10 @@ export const Links = {
     icon: "",
     name: "landing",
   },
+  gitSetting: {
+    title: "Github Setting",
+    href: "/dashboard/github",
+    icon: "github",
+    name: "gitSetting",
+  },
 } as const;
