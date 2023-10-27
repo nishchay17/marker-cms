@@ -33,6 +33,7 @@ function Github() {
       const oldData = queryClient.getQueriesData(ALL_REPO_KEY);
       const oldRepos = oldData[0][1] as [];
       queryClient.setQueryData(ALL_REPO_KEY, [newRepo, ...oldRepos]);
+      form.reset();
       toast({
         title: "Success",
         description: "repo created successfully",
@@ -64,7 +65,9 @@ function Github() {
               </FormItem>
             )}
           />
-          <Button type="submit">Save</Button>
+          <Button type="submit" isLoading={form.formState.isSubmitting}>
+            Save
+          </Button>
         </form>
       </Form>
     </div>
