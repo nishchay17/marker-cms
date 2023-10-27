@@ -24,7 +24,9 @@ export default function Hero() {
             size="sm"
             variant="outline"
             className="mr-3 shadow"
-            onClick={() => signIn("github")}
+            onClick={() =>
+              signIn("github", { callbackUrl: Links.dashboard.href })
+            }
           >
             {Links.signin.title}
           </Button>

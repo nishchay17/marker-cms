@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 import { Links } from "@/config/links";
 import { Button } from "@/components/ui/button";
@@ -14,7 +13,6 @@ export default function LandingNav() {
   const [prevScrollPos, setPrevScrollPos] = useState<number>(0);
   const [visible, setVisible] = useState<boolean>(true);
   const session = useSession();
-  const path = usePathname();
 
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
@@ -32,11 +30,6 @@ export default function LandingNav() {
   });
 
   const isAuth = session.status === "authenticated";
-  const authLink = isAuth
-    ? Links.dashboard
-    : path === Links.signin.href
-    ? Links.signup
-    : Links.signin;
 
   return (
     <nav
@@ -51,11 +44,23 @@ export default function LandingNav() {
             <h2 className="text-sm ml-2">{siteConfig.name}</h2>
           </div>
         </Link>
-        <Link href={authLink.href} prefetch>
-          <Button size="sm" variant="outline">
-            {authLink.title}
+        {isAuth ? (
+          <Link href={Links.dashboard.href} prefetch>
+            <Button size="sm" variant="outline">
+              {Links.dashboard.title}
+            </Button>
+          </Link>
+        ) : (
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() =>
+              signIn("github", { callbackUrl: Links.dashboard.href })
+            }
+          >
+            {Links.signin.title}
           </Button>
-        </Link>
+        )}
       </div>
     </nav>
   );
