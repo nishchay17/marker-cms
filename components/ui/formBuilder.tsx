@@ -46,7 +46,7 @@ type Props = {
   schema: any;
   formId: string;
   onSubmit: (data: unknown) => Promise<void>;
-  isLoading: boolean;
+  isLoading?: boolean;
   formBuilderData: FormBuilderProps[];
   formClassName?: string;
   btnText?: string;
@@ -173,7 +173,7 @@ function FormBuilder({
           <Button
             type="submit"
             form={formId}
-            isLoading={isLoading}
+            isLoading={isLoading || form.formState.isSubmitting}
             {...btnProps}
             className={cn("w-full mt-2", btnClassName)}
           >
