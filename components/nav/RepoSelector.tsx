@@ -5,10 +5,12 @@ import { useQuery } from "react-query";
 import { getRepo } from "@/actions/github";
 import Select from "../ui/Select";
 
+export const ALL_REPO_KEY = "all-repos";
+
 function RepoSelector() {
   const allRepos = useQuery({
     queryFn: () => getRepo(),
-    queryKey: "all-repos",
+    queryKey: ALL_REPO_KEY,
   });
   return (
     <div className="min-w-[12rem]">
