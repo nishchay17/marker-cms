@@ -1,4 +1,6 @@
-# Starter project for Next js
+# Marker CMS
+
+This is a CMS solution created on base of github, saving all the markdone content in github repository.
 
 # Env to set
 
@@ -9,11 +11,9 @@
 - DATABASE_USERNAME
 - DATABASE_PASSWORD
 
-## Clerk
+## Next auth
 
-- NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-- CLERK_SECRET_KEY
-- NEXT_PUBLIC_CLERK_SIGN_IN_URL
-- NEXT_PUBLIC_CLERK_SIGN_UP_URL
-- NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL
-- NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL
+- NEXTAUTH_SECRET
+- GITHUB_ID
+- GITHUB_SECRET
+- NEXTAUTH_URL
