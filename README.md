@@ -1,4 +1,4 @@
-# Marker CMS
+# Marker CMS (currently under development)
 
 This is a CMS solution created on base of github, saving all the markdone content in github repository.
 
