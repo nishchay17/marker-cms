@@ -32,7 +32,7 @@ function CreateRepo({}: Props) {
   });
   async function onSubmit(values: repoInsertType) {
     try {
-      const newRepo = await createRepo(values);
+      const newRepo = await createRepo(values, true);
       const oldData = queryClient.getQueriesData(ALL_REPO_KEY);
       const oldRepos = oldData[0][1] as [];
       queryClient.setQueryData(ALL_REPO_KEY, [newRepo, ...oldRepos]);

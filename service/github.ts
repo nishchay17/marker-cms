@@ -1,6 +1,7 @@
 "use server";
 
 import githubLinks from "@/config/github-api-links";
+import { repoInsertType } from "@/lib/db/schema/repo";
 
 class GithubService {
   static header = (token: string) =>
@@ -14,6 +15,19 @@ class GithubService {
       return await (
         await fetch(githubLinks.fetchAll, {
           headers: this.header(token),
+        })
+      ).json();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  public static async create(token: string, repo: repoInsertType) {
+    try {
+      return await (
+        await fetch(githubLinks.create, {
+          headers: this.header(token),
+          method: "POST",
+          body: JSON.stringify(repo),
         })
       ).json();
     } catch (error) {

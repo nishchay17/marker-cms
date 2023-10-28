@@ -16,7 +16,11 @@ export const repo = mysqlTable(
   })
 );
 
-export const repoInsertSchema = createInsertSchema(repo).pick({ name: true });
+export const repoInsertSchema = createInsertSchema(repo)
+  .pick({ name: true })
+  .transform((v) => ({
+    name: v.name.split(" ").join("-"),
+  }));
 
 export type repoInsertType = z.infer<typeof repoInsertSchema>;
 

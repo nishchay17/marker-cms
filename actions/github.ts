@@ -37,13 +37,26 @@ export async function getRepo() {
   return repos;
 }
 
-export async function createRepo(values: repoInsertType) {
+export async function createRepo(
+  values: repoInsertType,
+  createInGithub: boolean = false
+) {
   const { name } = repoInsertSchema.parse(values);
+  const githubToken = await getCurrentUserAuthToken();
+  if (!githubToken) {
+    throw new Error("User not found");
+  }
   const id = await getId();
   const userId = await getCurrentUserId();
   const isRepoExist = await db.select().from(repo).where(eq(repo.name, name));
   if (isRepoExist.length !== 0) {
     throw new Error("Repository already exists");
+  }
+  if (createInGithub) {
+    const created = await GithubService.create(githubToken, values);
+    if (created.message) {
+      throw new Error(created.message);
+    }
   }
   await db.insert(repo).values({ name, id, userId });
   return { id, name };
@@ -55,5 +68,11 @@ export async function getRepoFromGithub() {
     throw new Error("User not found");
   }
   const allRepos = await GithubService.fetchAll(githubToken);
+  if (!allRepos) {
+    throw new Error("Unable to fetch repository, please re-login");
+  }
+  if (!Array.isArray(allRepos)) {
+    throw new Error(allRepos.message ?? allRepos);
+  }
   return allRepos.map((i: { name: string }) => i.name);
 }
