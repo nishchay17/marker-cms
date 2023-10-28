@@ -23,6 +23,9 @@ function GithubFileViewer() {
     return <p>error</p>;
   }
   console.log("file.data", file.data);
+  if (!file?.data?.content) {
+    return <p>loading</p>;
+  }
   return (
     <Editor content={atob(file?.data?.content ?? "")} onChange={() => {}} />
   );
