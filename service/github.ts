@@ -10,6 +10,17 @@ class GithubService {
       Authorization: `Bearer ${token}`,
       "X-GitHub-Api-Version": "2022-11-28",
     });
+  public static async fetchUser(token: string) {
+    try {
+      return await (
+        await fetch(githubLinks.fetchUser, {
+          headers: this.header(token),
+        })
+      ).json();
+    } catch (error) {
+      console.log(error);
+    }
+  }
   public static async fetchAll(token: string) {
     try {
       return await (

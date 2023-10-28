@@ -76,3 +76,8 @@ export async function getRepoFromGithub() {
   }
   return allRepos.map((i: { name: string }) => i.name);
 }
+
+export async function getUsername(token: string) {
+  const user = await GithubService.fetchUser(token);
+  return user.login;
+}

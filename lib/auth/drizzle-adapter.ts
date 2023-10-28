@@ -3,6 +3,7 @@ import { and, eq } from "drizzle-orm";
 import { accounts, sessions, users, verificationTokens } from "../db/schema";
 import type { Adapter } from "next-auth/adapters";
 import type { PlanetScaleDatabase } from "drizzle-orm/planetscale-serverless";
+import { getCurrentUserAuthToken, getUsername } from "@/actions/github";
 
 export function DrizzleAdapter(db: PlanetScaleDatabase): Adapter {
   return {
@@ -20,6 +21,11 @@ export function DrizzleAdapter(db: PlanetScaleDatabase): Adapter {
         .where(eq(users.email, userData.email))
         .limit(1);
       const row = rows[0];
+      const account = await db
+        .select()
+        .from(accounts)
+        .where(eq(accounts.userId, row.id));
+      console.log({ account });
       if (!row) throw new Error("User not found");
       return row;
     },
@@ -72,7 +78,12 @@ export function DrizzleAdapter(db: PlanetScaleDatabase): Adapter {
       await db.delete(users).where(eq(users.id, userId));
     },
     async linkAccount(account) {
+      let username = "";
+      if (account.access_token) {
+        username = await getUsername(account.access_token);
+      }
       await db.insert(accounts).values({
+        githubUsername: username,
         id: createId(),
         userId: account.userId,
         type: account.type,
