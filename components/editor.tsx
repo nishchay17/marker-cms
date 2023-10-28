@@ -26,9 +26,7 @@ function Editor({ onChange, content }: Props) {
   const themeObj = useTheme();
   return (
     <MdEditor
-      className=""
       style={{ height: "100%" }}
-      onSave={(s) => console.log(s)}
       language="en-US"
       theme={(themeObj.theme ?? "light") as Themes}
       sanitize={sanitize}

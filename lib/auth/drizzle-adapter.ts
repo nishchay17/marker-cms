@@ -25,7 +25,6 @@ export function DrizzleAdapter(db: PlanetScaleDatabase): Adapter {
         .select()
         .from(accounts)
         .where(eq(accounts.userId, row.id));
-      console.log({ account });
       if (!row) throw new Error("User not found");
       return row;
     },

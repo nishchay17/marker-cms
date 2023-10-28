@@ -38,8 +38,6 @@ class GithubService {
     repo: string,
     path?: string
   ) {
-    console.log(token, user, repo);
-    console.log(githubLinks.fetchRepo(user, repo));
     try {
       return await (
         await fetch(githubLinks.fetchRepo(user, repo, path), {

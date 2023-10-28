@@ -22,11 +22,9 @@ function GithubFileViewer() {
   if (file.isError) {
     return <p>error</p>;
   }
-  console.log(file.data);
+  console.log("file.data", file.data);
   return (
-    <>
-      <Editor content={atob(file?.data?.content ?? "")} onChange={() => {}} />
-    </>
+    <Editor content={atob(file?.data?.content ?? "")} onChange={() => {}} />
   );
 }
 
