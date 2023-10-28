@@ -4,11 +4,13 @@ import { useQuery } from "react-query";
 
 import { getRepo } from "@/actions/github";
 import Select from "../ui/Select";
+import { useApplication } from "@/context/application.context";
 
 export const ALL_REPO_KEY = "all-repos";
 const FIVE_MIN = 5 * 60 * 1000;
 
 function RepoSelector() {
+  const { dispatch, state } = useApplication();
   const allRepos = useQuery({
     queryFn: getRepo,
     queryKey: ALL_REPO_KEY,
@@ -20,6 +22,13 @@ function RepoSelector() {
       <Select
         isLoading={allRepos.isLoading}
         placeholder="Repositority"
+        onChange={({ value, label }: { value: string; label: string }) =>
+          dispatch({
+            type: "add-current-repo",
+            payload: { id: value, name: label },
+          })
+        }
+        value={{ label: state.currentRepo?.name, value: state.currentRepo?.id }}
         options={allRepos.data?.map((r) => ({
           value: r.id,
           label: r.name,

@@ -9,14 +9,14 @@ import {
 } from "react";
 
 type State = {
-  currentRepo: string | null;
+  currentRepo: { id: string; name: string } | null;
 };
 type Action =
-  | { type: "add-current-repo"; payload: string }
+  | { type: "add-current-repo"; payload: { id: string; name: string } }
   | { type: "reset-repo" };
 
 const initialState: State = {
-  currentRepo: null,
+  currentRepo: { id: "", name: "Repositority" },
 };
 
 const ApplicationContext = createContext<
@@ -32,7 +32,7 @@ function reducer(state: State, action: Action) {
     case "add-current-repo":
       return { ...state, currentRepo: action.payload };
     case "reset-repo":
-      return { ...state, currentRepo: null };
+      return { ...state, currentRepo: initialState.currentRepo };
     default:
       return state;
   }
