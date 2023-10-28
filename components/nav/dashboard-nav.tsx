@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
-import { GithubIcon } from "lucide-react";
 
 interface DashboardNavProps {
   items: { href: string; title: string; icon?: string }[];
