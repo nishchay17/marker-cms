@@ -11,7 +11,7 @@ import { Skeleton } from "./ui/skeleton";
 const MdEditor = dynamic(
   () => import("md-editor-rt").then((mod) => mod.MdEditor),
   {
-    loading: () => <Skeleton className="w-full h-96" />,
+    loading: () => <Skeleton className="w-full h-full" />,
     ssr: false,
   }
 );
@@ -26,7 +26,8 @@ function Editor({ onChange, content }: Props) {
   const themeObj = useTheme();
   return (
     <MdEditor
-      className="rounded-xl"
+      className=""
+      style={{ height: "100%" }}
       onSave={(s) => console.log(s)}
       language="en-US"
       theme={(themeObj.theme ?? "light") as Themes}

@@ -1,14 +1,13 @@
-import React from "react";
-import GithubViewer from "./github-viewer";
+import GithubFileViewer from "./github-file-viewer";
+import GithubFileTreeViewer from "./github-file-tree-viewer";
 
-type Props = {};
-
-function GithubViewerWrapper({}: Props) {
+function GithubViewerWrapper() {
   return (
-    <div className="flex gap-4">
+    <div className="grid grid-cols-[220px_1fr]">
       <div className="flex flex-col bg-slate-50 border border-slate-300 p-1 overflow-y-auto max-w-[250px] scrollbar">
-        <GithubViewer key={"#root"} />
+        <GithubFileTreeViewer key={"#root"} />
       </div>
+      <GithubFileViewer />
     </div>
   );
 }

@@ -63,6 +63,17 @@ class GithubService {
       console.log(error);
     }
   }
+  public static async fetchURL(URL: string, token: string) {
+    try {
+      return await (
+        await fetch(URL, {
+          headers: this.header(token),
+        })
+      ).json();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 export default GithubService;

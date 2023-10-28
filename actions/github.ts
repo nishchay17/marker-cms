@@ -130,3 +130,16 @@ export async function getRepoFromGithub(
       return a.name.localeCompare(b.name);
     });
 }
+
+export async function getFileFromGithub(URL: string) {
+  const access_token = await getCurrentUserAuthToken();
+  if (!access_token) {
+    throw new Error("Token expired, login again");
+  }
+  const file = await GithubService.fetchURL(URL, access_token);
+  if (file.message) {
+    console.error(file.message);
+    return {};
+  }
+  return file;
+}

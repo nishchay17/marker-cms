@@ -7,15 +7,16 @@ import { getRepoFromGithub } from "@/actions/github";
 import { useApplication } from "@/context/application.context";
 import { IGithubNode } from "@/types/github";
 import { Icons } from "./icons";
+import { cn } from "@/lib/utils";
 
-export default function GithubViewer({
+export default function GithubFileTreeViewer({
   path = "",
   level = 0,
 }: {
   path?: string;
   level?: number;
 }) {
-  const { state } = useApplication();
+  const { state, dispatch } = useApplication();
   const [isClicked, setIsClicked] = useState<{ [key: string]: boolean }>({});
   const root = useQuery({
     queryFn: () => getRepoFromGithub(state.currentRepo?.name ?? "", path),
@@ -37,6 +38,7 @@ export default function GithubViewer({
   function handleNodeClick(node: IGithubNode) {
     const isFile = node.name.includes(".");
     if (isFile) {
+      dispatch({ type: "set-current-file", payload: node });
     } else {
       const isNodeClicked = isClicked[node.path] ?? false;
       setIsClicked((pre) => ({ ...pre, [node.path]: !isNodeClicked }));
@@ -59,7 +61,10 @@ export default function GithubViewer({
               e.stopPropagation();
               handleNodeClick(i);
             }}
-            className="text-left flex items-center whitespace-nowrap px-2 py-1 border-l border-slate-300  text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none hover:bg-slate-300 hover:text-accent-foreground"
+            className={cn(
+              "text-left flex items-center whitespace-nowrap px-2 py-1 border-l border-slate-300  text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none hover:bg-slate-300 hover:text-accent-foreground",
+              i.url === state.currentFile?.url ? "bg-slate-300" : ""
+            )}
             key={i.url}
             style={style}
           >
@@ -71,7 +76,11 @@ export default function GithubViewer({
             {i.name}
           </button>
           {isClicked[i.path] ? (
-            <GithubViewer key={i.path} path={i.path} level={level + 1} />
+            <GithubFileTreeViewer
+              key={i.path}
+              path={i.path}
+              level={level + 1}
+            />
           ) : null}
         </>
       ))}
