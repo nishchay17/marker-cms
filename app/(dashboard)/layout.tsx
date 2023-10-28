@@ -5,6 +5,7 @@ import { siteConfig } from "@/config/site";
 import SettingsMenu from "@/components/settings-menu";
 import RepoSelector from "@/components/nav/RepoSelector";
 import Profile from "@/components/nav/Profile";
+import { ApplicationProvider } from "@/context/application.context";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -12,7 +13,7 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <>
+    <ApplicationProvider>
       <div className="border-b-[1px] mb-6">
         <nav className="mx-auto max-w-[1700px] p-4">
           <div className="flex justify-between items-center">
@@ -35,6 +36,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className="w-[1px] bg-border" />
         <main className="flex flex-col">{children}</main>
       </div>
-    </>
+    </ApplicationProvider>
   );
 }
