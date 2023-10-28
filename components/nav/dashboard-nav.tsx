@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
+import { GithubIcon } from "lucide-react";
 
 interface DashboardNavProps {
   items: { href: string; title: string; icon?: string }[];
@@ -30,7 +31,7 @@ export function DashboardNav({ items }: DashboardNavProps) {
                   path === item.href ? "bg-accent" : "transparent"
                 )}
               >
-                <Icon className="mr-2 h-4 w-4" />
+                <Icon className="mr-2 h-5 w-5" />
                 <span>{item.title}</span>
               </span>
             </Link>
