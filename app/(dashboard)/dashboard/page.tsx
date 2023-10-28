@@ -1,8 +1,10 @@
-import { getRepoFromGithub } from "@/actions/github";
+import GithubViewerWrapper from "@/components/github-viewer-wrapper";
 
-type Props = {};
-
-export default async function Dashboard({}: Props) {
-  await getRepoFromGithub("teams-frontend-v2");
-  return <div>Dashboard</div>;
+export default async function Dashboard() {
+  return (
+    <>
+      <h2 className="text-2xl font-medium mb-10">Dashboard</h2>
+      <GithubViewerWrapper />
+    </>
+  );
 }

@@ -32,12 +32,17 @@ class GithubService {
       console.log(error);
     }
   }
-  public static async fetchRepo(token: string, user: string, repo: string) {
+  public static async fetchRepo(
+    token: string,
+    user: string,
+    repo: string,
+    path?: string
+  ) {
     console.log(token, user, repo);
     console.log(githubLinks.fetchRepo(user, repo));
     try {
       return await (
-        await fetch(githubLinks.fetchRepo(user, repo), {
+        await fetch(githubLinks.fetchRepo(user, repo, path), {
           headers: this.header(token),
         })
       ).json();

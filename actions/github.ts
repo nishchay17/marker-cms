@@ -9,6 +9,7 @@ import { accounts, repo } from "@/lib/db/schema";
 import { repoInsertSchema, repoInsertType } from "@/lib/db/schema/repo";
 import { getId } from "@/lib/utils";
 import GithubService from "@/service/github";
+import { IGithubNode } from "@/types/github";
 
 async function getCurrentUserId() {
   const userId = (await getServerSession(authOptions))?.user.id;
@@ -87,16 +88,45 @@ export async function getUsername(token: string) {
   return user.login;
 }
 
-export async function getRepoFromGithub(repo: string) {
+export async function getRepoFromGithub(
+  repo: string,
+  path?: string
+): Promise<IGithubNode[]> {
   const userId = await getCurrentUserId();
   const { access_token, githubUsername } = await findOneAccount(userId);
   if (!access_token) {
     throw new Error("Token expired, login again");
   }
-  const _repo = await GithubService.fetchRepo(
+  const _repos = await GithubService.fetchRepo(
     access_token,
     githubUsername,
-    repo
+    repo,
+    path
   );
-  console.log(_repo);
+  if (!Array.isArray(_repos)) {
+    console.error(_repos.message);
+    return [];
+  }
+  return _repos
+    .map((r: IGithubNode) => ({
+      name: r.name,
+      path: r.path,
+      url: r.url,
+      sha: r.sha,
+      size: r.size,
+      downloadLink: r.downloadLink,
+    }))
+    .sort((a: IGithubNode, b: IGithubNode) => {
+      // if . is present in the name so it will be a file, so
+      // placing it in end
+      const isBFile = b.name.includes(".");
+      const isAFile = a.name.includes(".");
+      if (isAFile && !isBFile) {
+        return 1;
+      }
+      if (!isAFile && isBFile) {
+        return -1;
+      }
+      return a.name.localeCompare(b.name);
+    });
 }

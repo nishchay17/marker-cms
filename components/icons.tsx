@@ -15,6 +15,7 @@ import {
   GithubIcon,
   type Icon as LucideIcon,
   ArrowLeft,
+  Folder,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -37,6 +38,7 @@ export const Icons: { [key: string]: Icon } = {
   "add-list": ListPlus,
   reload: RotateCw,
   github: GithubIcon,
+  folder: Folder,
   hero: (props: LucideProps) => (
     <Image
       draggable={false}
