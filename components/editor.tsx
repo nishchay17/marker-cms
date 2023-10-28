@@ -4,17 +4,17 @@ import dynamic from "next/dynamic";
 import sanitizeHtml from "sanitize-html";
 import "md-editor-rt/lib/style.css";
 import { useTheme } from "next-themes";
-import { Themes } from "md-editor-rt";
+import { MdEditor, Themes } from "md-editor-rt";
 
-import { Skeleton } from "./ui/skeleton";
+// import { Skeleton } from "./ui/skeleton";
 
-const MdEditor = dynamic(
-  () => import("md-editor-rt").then((mod) => mod.MdEditor),
-  {
-    loading: () => <Skeleton className="w-full h-96" />,
-    ssr: false,
-  }
-);
+// const MdEditor = dynamic(
+//   () => import("md-editor-rt").then((mod) => mod.MdEditor),
+//   {
+//     loading: () => <Skeleton className="w-full h-96" />,
+//     ssr: false,
+//   }
+// );
 
 const sanitize = (html: string) => sanitizeHtml(html);
 type Props = {
