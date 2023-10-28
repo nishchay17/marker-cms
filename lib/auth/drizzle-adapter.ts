@@ -21,10 +21,6 @@ export function DrizzleAdapter(db: PlanetScaleDatabase): Adapter {
         .where(eq(users.email, userData.email))
         .limit(1);
       const row = rows[0];
-      const account = await db
-        .select()
-        .from(accounts)
-        .where(eq(accounts.userId, row.id));
       if (!row) throw new Error("User not found");
       return row;
     },
