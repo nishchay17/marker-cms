@@ -11,7 +11,7 @@ import { Skeleton } from "./ui/skeleton";
 const MdEditor = dynamic(
   () => import("md-editor-rt").then((mod) => mod.MdEditor),
   {
-    loading: () => <Skeleton className="w-full h-full" />,
+    loading: () => <Skeleton className="w-full h-96" />,
     ssr: false,
   }
 );
