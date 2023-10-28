@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { createRepo, getRepoFromGithub } from "@/actions/github";
+import { createRepo, getAllRepoFromGithub } from "@/actions/github";
 import { Card } from "../ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,7 +29,7 @@ function ImportRepo() {
   const queryClient = useQueryClient();
 
   const data = useQuery({
-    queryFn: getRepoFromGithub,
+    queryFn: getAllRepoFromGithub,
     queryKey: "all-repo-from-github",
     staleTime: Infinity,
     refetchOnWindowFocus: false,

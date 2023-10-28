@@ -18,13 +18,18 @@ async function getCurrentUserId() {
   return userId;
 }
 
-export async function getCurrentUserAuthToken() {
-  const userId = await getCurrentUserId();
+async function findOneAccount(userId: string) {
   const account = await db
     .select()
     .from(accounts)
     .where(eq(accounts.userId, userId));
-  return account[0].access_token;
+  return account[0];
+}
+
+export async function getCurrentUserAuthToken() {
+  const userId = await getCurrentUserId();
+  const account = await findOneAccount(userId);
+  return account.access_token;
 }
 
 export async function getRepo() {
@@ -62,7 +67,7 @@ export async function createRepo(
   return { id, name };
 }
 
-export async function getRepoFromGithub() {
+export async function getAllRepoFromGithub() {
   const githubToken = await getCurrentUserAuthToken();
   if (!githubToken) {
     throw new Error("User not found");
@@ -80,4 +85,18 @@ export async function getRepoFromGithub() {
 export async function getUsername(token: string) {
   const user = await GithubService.fetchUser(token);
   return user.login;
+}
+
+export async function getRepoFromGithub(repo: string) {
+  const userId = await getCurrentUserId();
+  const { access_token, githubUsername } = await findOneAccount(userId);
+  if (!access_token) {
+    throw new Error("Token expired, login again");
+  }
+  const _repo = await GithubService.fetchRepo(
+    access_token,
+    githubUsername,
+    repo
+  );
+  console.log(_repo);
 }

@@ -24,7 +24,20 @@ class GithubService {
   public static async fetchAll(token: string) {
     try {
       return await (
-        await fetch(githubLinks.fetchAll, {
+        await fetch(githubLinks.fetchAllRepo, {
+          headers: this.header(token),
+        })
+      ).json();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  public static async fetchRepo(token: string, user: string, repo: string) {
+    console.log(token, user, repo);
+    console.log(githubLinks.fetchRepo(user, repo));
+    try {
+      return await (
+        await fetch(githubLinks.fetchRepo(user, repo), {
           headers: this.header(token),
         })
       ).json();
@@ -35,7 +48,7 @@ class GithubService {
   public static async create(token: string, repo: repoInsertType) {
     try {
       return await (
-        await fetch(githubLinks.create, {
+        await fetch(githubLinks.createRepo, {
           headers: this.header(token),
           method: "POST",
           body: JSON.stringify(repo),
