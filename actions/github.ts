@@ -1,7 +1,7 @@
 "use server";
 
 import { getServerSession } from "next-auth";
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 
 import { authOptions } from "@/lib/auth/auth-options";
 import { db } from "@/lib/db";
@@ -19,7 +19,7 @@ export async function getCurrentUserId() {
   return userId;
 }
 
-async function findOneAccount(userId: string) {
+export async function findOneAccount(userId: string) {
   const account = await db
     .select()
     .from(accounts)
@@ -43,6 +43,15 @@ export async function getRepos() {
   return repos;
 }
 
+export async function getRepo(name: string) {
+  const userId = await getCurrentUserId();
+  const _repo = await db
+    .select()
+    .from(repo)
+    .where(and(eq(repo.userId, userId), eq(repo.name, name)));
+  return _repo;
+}
+
 export async function createRepo(
   values: repoInsertType,
   createInGithub: boolean = false
@@ -52,7 +61,7 @@ export async function createRepo(
   if (!githubToken) {
     throw new Error("User not found");
   }
-  const id = await getId();
+  const id = getId();
   const userId = await getCurrentUserId();
   const isRepoExist = await db.select().from(repo).where(eq(repo.name, name));
   if (isRepoExist.length !== 0) {
@@ -141,5 +150,21 @@ export async function getFileFromGithub(URL: string) {
     console.error(file.message);
     return {};
   }
+  return file;
+}
+
+export async function getFileFromGithubPublic(
+  user: string,
+  repo: string,
+  branch: string,
+  path: string
+) {
+  const file = await GithubService.getPublicGithubFile(
+    user,
+    repo,
+    branch,
+    path
+  );
+  console.log(file);
   return file;
 }

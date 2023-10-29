@@ -72,6 +72,24 @@ class GithubService {
       console.log(error);
     }
   }
+  public static async getPublicGithubFile(
+    user: string,
+    repo: string,
+    branch: string,
+    path: string
+  ) {
+    try {
+      console.log(
+        "link: ",
+        githubLinks.fetchPublicGithubFile(user, repo, branch, path)
+      );
+      return await (
+        await fetch(githubLinks.fetchPublicGithubFile(user, repo, branch, path))
+      ).text();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 export default GithubService;

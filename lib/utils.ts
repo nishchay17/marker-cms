@@ -19,7 +19,7 @@ function encodeBase58(buf: Buffer): string {
   return baseX(alphabet).encode(buf);
 }
 
-export async function getId() {
+export function getId() {
   return encodeBase58(
     Buffer.from(crypto.randomUUID().replace(/-/g, ""), "hex")
   );
