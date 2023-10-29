@@ -42,6 +42,7 @@ function CreateRepo({}: Props) {
         description: "Repository created successfully",
       });
     } catch (error) {
+      console.log(error);
       const message =
         error instanceof Error
           ? error.message
