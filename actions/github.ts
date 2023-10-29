@@ -11,7 +11,7 @@ import { getId } from "@/lib/utils";
 import GithubService from "@/service/github";
 import { IGithubNode } from "@/types/github";
 
-async function getCurrentUserId() {
+export async function getCurrentUserId() {
   const userId = (await getServerSession(authOptions))?.user.id;
   if (!userId) {
     throw new Error("No user found");
@@ -33,7 +33,7 @@ export async function getCurrentUserAuthToken() {
   return account.access_token;
 }
 
-export async function getRepo() {
+export async function getRepos() {
   const userId = await getCurrentUserId();
   const repos = await db
     .select()

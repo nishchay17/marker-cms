@@ -2,7 +2,7 @@
 
 import { useQuery } from "react-query";
 
-import { getRepo } from "@/actions/github";
+import { getRepos } from "@/actions/github";
 import Select from "../ui/Select";
 import { useApplication } from "@/context/application.context";
 
@@ -12,7 +12,7 @@ const FIVE_MIN = 5 * 60 * 1000;
 function RepoSelector() {
   const { dispatch, state } = useApplication();
   const allRepos = useQuery({
-    queryFn: getRepo,
+    queryFn: getRepos,
     queryKey: ALL_REPO_KEY,
     staleTime: FIVE_MIN,
     refetchOnWindowFocus: false,
