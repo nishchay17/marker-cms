@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import {
   AlertTriangle,
   ArrowRight,
@@ -16,6 +17,7 @@ import {
   type Icon as LucideIcon,
   ArrowLeft,
   Folder,
+  KeyRound,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -39,6 +41,7 @@ export const Icons: { [key: string]: Icon } = {
   reload: RotateCw,
   github: GithubIcon,
   folder: Folder,
+  key: KeyRound,
   hero: (props: LucideProps) => (
     <Image
       draggable={false}
@@ -47,11 +50,11 @@ export const Icons: { [key: string]: Icon } = {
       style={{ height: `${props.size}px`, width: `${props.size}px` }}
     />
   ),
-  loader: (props: LucideProps) => (
+  loader: ({ className, ...props }: LucideProps) => (
     <svg
       aria-hidden="true"
       role="status"
-      className="w-3 h-3 ml-2 text-white animate-spin"
+      className={cn("w-3 h-3 ml-2 text-white animate-spin", className)}
       viewBox="0 0 100 100"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
