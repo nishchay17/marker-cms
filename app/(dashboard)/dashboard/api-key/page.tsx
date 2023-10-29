@@ -1,4 +1,5 @@
 import CreateApiKey from "@/components/api-key/add-api-key";
+import ViewApiKey from "@/components/api-key/view-api-key";
 
 function ApiKey() {
   return (
@@ -9,6 +10,7 @@ function ApiKey() {
       </p>
       <section className="mt-10 space-y-5">
         <CreateApiKey />
+        <ViewApiKey />
       </section>
     </>
   );

@@ -32,9 +32,9 @@ function CreateApiKey() {
   async function onSubmit(values: apiKeyInsertType) {
     try {
       const newApiKey = await createApiKey(values.name);
-      //   const oldData = queryClient.getQueriesData(ALL_API_KEY);
-      //   const oldRepos = oldData[0][1] as [];
-      //   queryClient.setQueryData(ALL_REPO_KEY, [newRepo, ...oldRepos]);
+      const oldData = queryClient.getQueriesData(ALL_API_KEY);
+      const oldApikey = oldData[0][1] as [];
+      queryClient.setQueryData(ALL_API_KEY, [newApiKey, ...oldApikey]);
       form.reset();
       toast({
         title: "Success",
