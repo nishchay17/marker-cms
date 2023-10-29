@@ -19,7 +19,7 @@ export async function createApiKey(name: string) {
       userId,
       name,
     });
-  } catch (error) {
+  } catch (error: any) {
     if (error?.body?.message?.includes("Duplicate")) {
       throw new Error("API key with this name already exists");
     } else {
