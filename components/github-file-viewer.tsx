@@ -27,7 +27,8 @@ function GithubFileViewer() {
     return <p>loading</p>;
   }
   return (
-    <Editor content={atob(file?.data?.content ?? "")} onChange={() => {}} />
+    // <Editor content={atob(file?.data?.content ?? "")} onChange={() => {}} />
+    <pre>{atob(file?.data?.content)}</pre>
   );
 }
 

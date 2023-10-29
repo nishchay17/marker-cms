@@ -7,7 +7,7 @@ function GithubViewerWrapper() {
       <div className="flex flex-col bg-slate-50 border border-slate-300 p-1 overflow-y-auto max-w-[250px] scrollbar">
         <GithubFileTreeViewer key={"#root"} />
       </div>
-      {/* <GithubFileViewer /> */}
+      <GithubFileViewer />
     </div>
   );
 }
