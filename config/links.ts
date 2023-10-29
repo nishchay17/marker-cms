@@ -33,4 +33,10 @@ export const Links = {
     icon: "add",
     name: "editor",
   },
+  apiKey: {
+    title: "API key",
+    href: "/dashboard/api-key",
+    icon: "key",
+    name: "apiKey",
+  },
 } as const;
