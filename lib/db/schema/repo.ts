@@ -1,4 +1,10 @@
-import { index, mysqlTable, timestamp, varchar } from "drizzle-orm/mysql-core";
+import {
+  boolean,
+  index,
+  mysqlTable,
+  timestamp,
+  varchar,
+} from "drizzle-orm/mysql-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import * as z from "zod";
 
@@ -8,6 +14,7 @@ export const repo = mysqlTable(
     id: varchar("id", { length: 255 }).primaryKey().notNull(),
     userId: varchar("userId", { length: 255 }).notNull(),
     name: varchar("name", { length: 255 }).notNull().unique(),
+    isPrivate: boolean("isPrivate").default(false),
     created_at: timestamp("created_at").notNull().defaultNow(),
     updated_at: timestamp("updated_at").notNull().defaultNow().onUpdateNow(),
   },
